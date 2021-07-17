@@ -22,6 +22,23 @@ char ATCMGFcommand[] = {'A', 'T', '+', 'C', 'M', 'G', 'F', '=', '1','\n\r','\0'}
 char ATCMGScommand[] = {'A', 'T', '+', 'C', 'M', 'G', 'S', '=', '"', '+', '8', '8', '0', '1', '7','0','3', '8', '2', '0', '5', '6', '5', '"', '\n\r', '\0'};
 
 
+char ATSapbrPost1[] = {'A','T', '+', 'S', 'A', 'P', 'B', 'R', '=', '3', ',' , '1',',', '"', 'C', 'o', 'n', 't', 'y', 'p', 'e', '"', ',', '"', 'G', 'P', 'R', 'S', '"', '\n\r' , '\0'};
+char ATSapbrPost2[] = {'A','T', '+', 'S', 'A', 'P', 'B', 'R', '=', '3', ',' , '1', '"', 'A', 'P', 'N', '"', ',', '"','R', 'o', 'b', 'i', '-', 'I', 'N', 'T', 'E', 'R', 'N', 'E', 'T', '"', '\n\r' , '\0'};
+char ATSapbrPost3[] = {'A','T', '+', 'S', 'A', 'P', 'B', 'R', '=', '1', ',' , '1', '\n\r' , '\0'};
+char ATSapbrPost4[] = {'A','T', '+', 'S', 'A', 'P', 'B', 'R', '=', '2', ',' , '1', '\n\r' , '\0'};
+char httpiInitPost5[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'I', 'N', 'I', 'T', '\n\r', '\0'};
+char AThttpparaPost6[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'P', 'A', 'R', 'A', '=','"', 'C', 'I', 'D','"', ',', '1', '\n\r', '\0'};
+char AThttpparaPost7[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'P', 'A', 'R', 'A', '=', '"', 'U', 'R', 'L','"', ',', '"', 'a', 'p', 'i', '.', 't', 'h', 'i', 'n', 'g', 's', 'p', 'e', 'a', 'k', '.', 'c', 'o', 'm', '/', 'u', 'p', 'd', 'a', 't', 'e', '"', '\n\r', '\0'};
+char ATHTTPDataPost8[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'D', 'A', 'T', 'A', '=', '0',',', '1', '0','0','0','0', '\n\r', '\0'};
+char writeApikeyPost9[] = {'a', 'p', 'i', '_', 'k', 'e', 'y', '=', 'K','R','J','5','C','7','M','A','M','R','W','H','S','S','K','O', '&','f','i','e','l','d','1','=','1','\n\r', '\0'};
+char ATHTTPAction1Post10[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'A', 'C', 'T', 'I', 'O', 'N', '=', '1', '\n\r', '\0'};
+
+
+char ATURL[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'P', 'A', 'R', 'A', '=', '"', 'U', 'R', 'L','"', ',', '"', 'a', 'p', 'i', '.', 't', 'h', 'i', 'n', 'g', 's', 'p', 'e', 'a', 'k', '.', 'c', 'o', 'm', '/', 'u', 'p', 'd', 'a', 't', 'e',  '?','a','p','i','_','k','e','y','=','K','R','J','5','C','7','M','A','M','R','W','H','S','S','K','O','&','f','i','e','l','d','1','=','1','0', '0', '"', '\n\r', '\0'};
+char ATHTTPAction0[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'A', 'C', 'T', 'I', 'O', 'N', '=', '0', '\n\r', '\0'};
+char ATHTTPRead[] = {'A','T','+','H','T','T','P','R','E','A','D', '\n\r', '\0'};
+char ATHTTPTerm[] = {'A','T','+','H','T','T','P','T','E','R','M','\n\r', '\0'};
+
 unsigned char Res[16], lpg[16], smoke[16];
 float Ro=10;    //Ro is initialized to 10 kilo ohms
 volatile uint8_t gc,fc;
@@ -325,6 +342,78 @@ void ledLightAndBuzzer(){
 	PORTB = 0x06;
 }
 
+
+
+void HTTPSendTest(){
+	Lcd4_Clear();
+	Lcd4_Write_String("Sending");
+	
+	USART_send_string(ATcommand);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost1);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost2);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost3);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost4);
+	_delay_ms(1500);
+	USART_send_string(httpiInitPost5);
+	_delay_ms(1500);
+	USART_send_string(AThttpparaPost6);
+	_delay_ms(1500);
+	USART_send_string(AThttpparaPost7);
+	_delay_ms(1500);
+	USART_send_string(ATHTTPDataPost8);
+	_delay_ms(1500);
+	USART_send_string(writeApikeyPost9);
+	_delay_ms(1500);
+	USART_send_string(ATHTTPAction1Post10);
+	_delay_ms(20000);
+	
+	Lcd4_Clear();
+	Lcd4_Write_String("sent");
+}
+
+void HTTPSendTest2(uint16_t val){
+	Lcd4_Clear();
+	Lcd4_Write_String("Sending");
+	//char ATURL[] = {'A', 'T', '+', 'H', 'T', 'T', 'P', 'P', 'A', 'R', 'A', '=', '"', 'U', 'R', 'L','"', ',', '"', 'a', 'p', 'i', '.', 't', 'h', 'i', 'n', 'g', 's', 'p', 'e', 'a', 'k', '.', 'c', 'o', 'm', '/', 'u', 'p', 'd', 'a', 't', 'e',  '?','a','p','i','_','k','e','y','=','K','R','J','5','C','7','M','A','M','R','W','H','S','S','K','O','&','f','i','e','l','d','1','=','1','0', '0', '"', '\n\r', '\0'};
+
+	char command[100];
+	sprintf(command, "AT+HTTPPARA=\"URL\",\"api.thingspeak.com/update?api_key=KRJ5C7MAMRWHSSKO&field2=%d\"", val);
+	
+	USART_send_string(ATcommand);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost1);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost2);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost3);
+	_delay_ms(1500);
+	USART_send_string(ATSapbrPost4);
+	_delay_ms(1500);
+	USART_send_string(httpiInitPost5);
+	_delay_ms(1500);
+	USART_send_string(AThttpparaPost6);
+	_delay_ms(1500);
+	//USART_send_string(ATURL);
+	USART_send_string(command);
+	USART_send('\n\r');
+	_delay_ms(1500);
+	USART_send_string(ATHTTPAction0);
+	_delay_ms(1500);
+	USART_send_string(ATHTTPRead);
+	_delay_ms(1500);
+	USART_send_string(ATHTTPTerm);
+	_delay_ms(1500);
+	
+	Lcd4_Clear();
+	Lcd4_Write_String("sent");
+	_delay_ms(2000);
+}
+
+
 int main(void)
 {	
 	gc = 0;
@@ -350,18 +439,24 @@ int main(void)
 	GSM_init();
 	//float val=flameSensorInit();
 	
-	gasSensorInit();
+	//gasSensorInit();
 	//Lcd4_Set_Cursor(1,1);
 	//Lcd4_Write_String("init");
 	//_delay_ms(2000);
+	
+	//HTTPSendTest();
+	uint16_t val = 0;
     while (1) 
     {
-		getGasSensorInput();
-		PORTB = 0x00;
+		//getGasSensorInput();
+		//PORTB = 0x00;
 		//flameSensorInput();
 		//PORTB = 0x00;
 		//motionSensorInput();
 		//PORTB = 0x00;
+		HTTPSendTest2(val);
+		val++;
+		_delay_ms(10000);
     }
 	
 	return 0;
